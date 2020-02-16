@@ -54,7 +54,7 @@ The payload must be a number! Anything else will try to be parsed into a number 
 
 ### Chipset
 
-The Chipset by default is set to 1115. The Chipset is the version of ads supported. If you have an ads10115 select that option.
+The Chipset by default is set to 1115. The Chipset is the version of ads supported. If you have an ads1015 select that option.
 
 ### i2c_Address
 
