@@ -1,4 +1,4 @@
-node-red-contrib-ads1x15-raspi
+node-red-contrib-anolog-to-digital-converter-raspberry-pi
 ==================================
 
 
@@ -32,7 +32,7 @@ Install with node-red Palette Manager or,
 Run the following command in your Node-RED user directory - typically `~/.node-red`:
 
 ```
-npm install node-red-contrib-ads1x15-raspi
+npm install node-red-contrib-anolog-to-digital-converter-raspberry-pi
 ```
 
 
@@ -108,5 +108,5 @@ Thanks to [Kevin Fitzgerald AKA kfitzgerald](https://github.com/kfitzgerald/rasp
 ## release notes ##
 0.0.0 = (majorchange) . (new_feature) . (bugfix-simple_mod)
 
-version 0.2.11
+version 0.2.13
 First Public release

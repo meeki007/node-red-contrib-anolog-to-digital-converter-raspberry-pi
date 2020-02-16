@@ -1,7 +1,7 @@
 {
-    "name": "node-red-contrib-ads1x15-raspi",
-    "version": "0.0.1",
-    "description": "A node-red node providing access to a ADS1x15 I2C analog to digital converter",
+    "name": "node-red-contrib-anolog-to-digital-converter-raspberry-pi",
+    "version": "0.2.13",
+    "description": "A node-red node providing access to a ADS1x15 I2C analog to digital converter using a raspberry pi",
     "dependencies": {
       "raspi-kit-ads1x15": ">=1.0.0",
       "raspi": ">= 5",
@@ -20,7 +20,7 @@
     },
     "repository": {
       "type": "git",
-      "url": "git://github.com/meeki007/node-red-contrib-ads1115.git"
+      "url": "git://github.com/meeki007/node-red-contrib-anolog-to-digital-converter-raspberry-pi.git"
     },
     "keywords": [
       "node-red",
@@ -35,7 +35,7 @@
     "author": "David 'Meeki007' Burrows",
     "license": "Apache-2.0",
     "bugs": {
-      "url": "https://github.com/meeki007/node-red-contrib-ads1115/issues"
+      "url": "https://github.com/meeki007/node-red-contrib-anolog-to-digital-converter-raspberry-pi/issues"
     },
-    "homepage": "https://github.com/meeki007/node-red-contrib-ads1115#readme"
+    "homepage": "https://github.com/meeki007/node-red-contrib-anolog-to-digital-converter-raspberry-pi#readme"
 }
