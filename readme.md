@@ -2,7 +2,7 @@ node-red-contrib-ads1x15-raspi
 ==================================
 
 
-<a href="http://nodered.org" target="_new">Node-RED</a> A node-red node providing access to a ADS1x15 I2C analog to digital converter.
+<a href="http://nodered.org" target="_new">Node-RED</a> A node-red node providing access to a ADS1x15 I2C analog to digital converter using a raspberry pi.
 
 ---
 
