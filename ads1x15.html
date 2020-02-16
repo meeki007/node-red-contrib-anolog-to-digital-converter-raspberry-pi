@@ -1,0 +1,179 @@
+<script type="text/x-red" data-template-name="ads1x15-raspi">
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-property"><i class="fa fa-ellipsis-h"></i> Property</label>
+      <input type="text" id="node-input-property" placeholder="payload" style="width:calc(70% - 1px)">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-chip"><i class="fa fa-microchip"></i> Chipset</label>
+        <select id="node-input-chip">
+            <option value="IC_ADS1015" >ads1015</option>
+            <option value="IC_ADS1115" >ads1115</option>
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-i2c_address"><i class="fa fa-cog"></i> i2c Address</label>
+        <select id="node-input-i2c_address">
+            <option value="ADDRESS_0x48">0x48</option>
+            <option value="ADDRESS_0x49">0x49</option>
+            <option value="ADDRESS_0x4A">0x4A</option>
+            <option value="ADDRESS_0x4B">0x4B</option>
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-channel"><i class="fa fa-cog"></i> Channel</label>
+        <select id="node-input-channel">
+          <option value="CHANNEL_0">A0-GND</option>
+          <option value="CHANNEL_1">A1-GND</option>
+          <option value="CHANNEL_2">A2-GND</option>
+          <option value="CHANNEL_3">A3-GND</option>
+          <option value="DIFF_0_1">A0-A1</option>
+          <option value="DIFF_0_3">A0-A3</option>
+          <option value="DIFF_1_3">A1-A3</option>
+          <option value="DIFF_2_3">A2-A3</option>
+        </select>
+    </div>
+
+    <div class="form-row" id="samplesPerSecond0">
+        <label for="input-samplesPerSecond0"><i class="fa fa-cog"></i> Samples/sec</label>
+        <select id="input-samplesPerSecond0">
+           <option value="SPS_128">128</option>
+            <option value="SPS_250">250</option>
+            <option value="SPS_490">490</option>
+            <option value="SPS_920">920</option>
+            <option value="SPS_1600">1600</option>
+            <option value="SPS_2400">2400</option>
+            <option value="SPS_3300">3300</option>
+        </select>
+    </div>
+    <div class="form-row" id="samplesPerSecond1">
+        <label for="input-samplesPerSecond1"><i class="fa fa-cog"></i> Samples/sec</label>
+        <select id="input-samplesPerSecond1">
+            <option value="SPS_8">8</option>
+            <option value="SPS_16">16</option>
+            <option value="SPS_32">32</option>
+            <option value="SPS_64">64</option>
+            <option value="SPS_128">128</option>
+            <option value="SPS_250">250</option>
+            <option value="SPS_475">475</option>
+            <option value="SPS_860">860</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-progGainAmp"><i class="fa fa-cog"></i> Gain</label>
+        <select id="node-input-progGainAmp">
+            <option value="PGA_6_144V">6.144v (+/-)</option>
+            <option value="PGA_4_096V">4.096v (+/-)</option>
+            <option value="PGA_2_048V">2.048v (+/-)</option>
+            <option value="PGA_1_024V">1.024v (+/-)</option>
+            <option value="PGA_0_512V">0.512v (+/-)</option>
+            <option value="PGA_0_256V">0.256v (+/-)</option>
+        </select>
+    </div>
+
+</script>
+
+<script type="text/x-red" data-help-name="ads1x15-raspi">
+    <p>A node-red node providing access to a ADS1X15 I2C analog to digital converter.</p>
+    <p>Guide for the ADS </p>
+    <p>https://www.best-microcontroller-projects.com/ads1115.html </p>
+    <p><strong>Name:</strong><br/>
+    Define the msg name if you wish to change the name displayed on the node.</p>
+    <p><strong>Property:</strong><br/>
+    Define the msg property name you wish. The name you select (msg.example) will be the output property.</p>
+
+    <p><strong>Chipset:</strong><br/>
+    The Chipset by default is set to 1115. The Chipset is the version of ads supported. If you have an ads10115 select that option</p>
+
+    <p><strong>i2c Address:</strong><br/>
+    The Address by default is set to 0x48. You can setup the ADS1X15 with one of four addresses, 0x48, 0x49, 0x4a, 0x4b. Please see ads1X15 documentation for more information.</p>
+
+    <p><strong>Channel:</strong><br/>
+    The Channel may be used for Single-ended measurements (A0-GND) or Differential measurements (A0-A1). Single-ended measurements measure voltages relative to a shared reference point which is almost always the main units ground. Differential measurements are “floating”, meaning that it has no reference to ground. The measurement is taken as the voltage difference between the two wires. Example: The voltage of a battery can be taken by connecting A0 to one terminal and A1 to the other</p>
+
+    <p><strong>Samples/sec:</strong><br/>
+    Select the sample per second you want your ADS to make. Higher rate equals more samples taken before being averaged and sent back from the ADS. Please see ads1X15 documentation for more information.</p>
+
+    <p><strong>Gain:</strong><br/>
+    Select the Gain you want. To increase accuracy of smaller voltage signals, the gain can be adjusted to a lower range. Do NOT input voltages higher than the range or device max voltage, pi 3.3v use a voltage devider to lover input voltages as needed</p>
+
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType("ads1x15-raspi", {
+        category: "Raspberry Pi",
+        defaults: {
+            property: {value:"payload",required:true},
+            name: {value:""},
+            chip: { value: "IC_ADS1115" },
+            i2c_address: {value:"ADDRESS_0x48"},
+            channel: {value:"CHANNEL_0"},
+            samplesPerSecond: { value: "SPS_250" },
+            progGainAmp: { value: "PGA_4_096V" },
+        },
+        color:"#FFCC66",
+        inputs: 1,
+        outputs: 1,
+        icon: "ads1x15-raspi.png",
+        label: function() {
+            return this.name || "ads1x15-raspi";
+        },
+        labelStyle: function() {
+            return this.name ? "node_label_italic" : "";
+        },
+        oneditprepare: function() {
+            // defaults
+            if (this.property === undefined)
+            {
+                $("#node-input-property").val("payload");
+            }
+            $("#node-input-property").typedInput({default:'msg',types:['msg']});
+
+            var chip = $("#node-input-chip").val();
+            chip == "IC_ADS1015" ? (
+                $("#input-samplesPerSecond0").val(this.samplesPerSecond)
+            ) : (
+                    $("#input-samplesPerSecond1").val(this.samplesPerSecond)
+                );
+            $("#node-input-chip").change(function () {
+                var chip = $("#node-input-chip").val();
+                chip == "IC_ADS1115" ? (
+                    $("#samplesPerSecond0").hide(),
+                    $("#samplesPerSecond1").show(),
+                    $("#input-samplesPerSecond1").val('SPS_128')
+                ) : (
+                        $("#samplesPerSecond1").hide(),
+                        $("#samplesPerSecond0").show(),
+                        $("#input-samplesPerSecond0").val('SPS_920')
+                    );
+            });
+
+            this.i2c_address = !this.i2c_address ? "ADDRESS_0x48" : this.i2c_address;
+            this.channel = !this.channel ? "CHANNEL_0" : this.channel;
+            this.progGainAmp = !this.progGainAmp ? "PGA_4_096V" : this.progGainAmp;
+
+        },
+        oneditsave: function () {
+            var chip = $("#node-input-chip").val();
+            chip == "IC_ADS1015" ? (
+                $("#node-input-samplesPerSecond").val($("#input-samplesPerSecond0").val())
+            ) : (
+                    $("#node-input-samplesPerSecond").val($("#input-samplesPerSecond1").val())
+                );
+        }
+
+
+
+
+
+
+    });
+</script>
