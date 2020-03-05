@@ -43,7 +43,7 @@ npm install node-red-contrib-anolog-to-digital-converter-raspberry-pi
 
 To get a voltage or difference of voltage from a ADS1115 or ADS1015 analog to digital converter just select the correct setting for your device and trigger the node.
 
-![example1.png](https://github.com/meeki007/node-red-contrib-anolog-to-digital-converter-raspberry-pi/master/doc/example1.png?raw=true)
+![example1.png](./doc/example1.png)
 
 
 ### Name
