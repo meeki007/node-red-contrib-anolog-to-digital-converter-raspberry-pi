@@ -111,7 +111,9 @@ The ADS1X15 cannot process more than one task at a time. To support this a delay
 Please import and use the advance example above if you need direction.
 
 <br>
+
 ### Dropped_Request
+
 <br>
 <br>
 If you try to get more than one voltage reading in 100ms, from the same address, and channel, the node will drop the msg triggering the event.<br> To stop this error just lower the amount of trigger events your sending to the node.  
