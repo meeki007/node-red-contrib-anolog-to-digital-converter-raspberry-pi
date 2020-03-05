@@ -101,7 +101,7 @@ Examples showing how to use the voltage_undivider.
 
 ### treeing
 
-![treeing.png](./doc/Treeing.png)
+![treeing.png](./doc/treeing.png)
 <br>
 <br>
 This is supported but highly discouraged. A warning message will display when this method is used.
