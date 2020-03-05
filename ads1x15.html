@@ -105,6 +105,9 @@
     <p><strong>Gain:</strong><br/>
     Select the Gain you want. To increase accuracy of smaller voltage signals, the gain can be adjusted to a lower range. Do NOT input voltages higher than the range or device max voltage, pi 3.3v use a voltage devider to lover input voltages as needed</p>
 
+    <p><strong>Error and warning msg's:</strong><br/>
+    <b>Treeing</b><br>This is supported but highly discouraged. A warning message will display when this method is used.<br>The ADS1X15 cannot process more than one task at a time. To support this a delay is added to each trigger and while loop is used to check when a slot is available. This adds overhead that is not needed if the user just daisy-chain the nodes and sets the msg.payload to a more appropriate name.<br><b>Dropped_Request</b>If you try to get more than one voltage reading in 100ms, from the same address, and channel, the node will drop the msg triggering the event.<br> To stop this error just lower the amount of trigger events your sending to the node.</p>
+
 </script>
 
 <script type="text/javascript">
