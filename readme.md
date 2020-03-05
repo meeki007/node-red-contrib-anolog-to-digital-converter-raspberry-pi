@@ -164,7 +164,7 @@ New feature: added Asynchronous Function to handle treeing<br>
 Also added duplicate trigger drop on same msg triggering the same chip, address, and channel in less than 100ms
 <br>
 <br>
-version 0.4.16
+version 0.4.19
 <br>
 Updated Documentation
 <br>
