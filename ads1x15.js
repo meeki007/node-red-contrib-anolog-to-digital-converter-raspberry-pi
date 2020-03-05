@@ -68,12 +68,12 @@ module.exports = function(RED)
 
                 if (adc_busy === true)
                 {
-                    node.warn('Upstream Treeing of node anolog_to_digital_converter_raspberry_pi detected. Please do not trigger more than one of these nodes at a time as Asynchronous message passing is not recomended; though supported it adds a delay to the output of these nodes. See documentation for this node on treeing');
+                    node.warn('Did not wait until all the nodes were finished. increase the time between triggers. ELSE: Upstream Treeing of node anolog_to_digital_converter_raspberry_pi detected. Please do not trigger more than one of these nodes at a time as Asynchronous message passing is not recomended; though supported it adds a delay to the output of these nodes. See documentation for this node on treeing.');
                     while(adc_busy === true)
                     {
                         //Math.floor(Math.random() * (max - min + 1) + min);
-                        var random_number_between_100_200 = Math.floor(Math.random() * (200 - 100 + 1) + 100);
-                        await sleep(random_number_between_100_200);
+                        var random_number_between_100_200 = Math.floor(Math.random() * (300 - 100 + 1) + 100);
+                        await sleep(random_number_between_100_300);
                         adc_busy = globalContext.get("adc_is_busy_node_red_contrib_anolog_to_digital_converter_raspberry_pi");
                     }
                 }
@@ -82,7 +82,7 @@ module.exports = function(RED)
                 globalContext.set("adc_is_busy_node_red_contrib_anolog_to_digital_converter_raspberry_pi", true);
 
                 //sleep 100ms to drop any extra requests made to the ads
-                await sleep(50);
+                await sleep(100);
 
 
                 // Init Raspi
@@ -96,7 +96,7 @@ module.exports = function(RED)
                     const adc = new ADS1x15(
                     {
                         i2c,                                    // i2c interface
-                        chip: ADS1x15.chips.IC_ADS1115,         // chip model
+                        chip: ADS1x15.chips[this.chip],         // chip model
                         address: ADS1x15.address[this.i2c_address],  // i2c address on the bus
 
                         // Defaults for future readings
@@ -112,7 +112,7 @@ module.exports = function(RED)
                         {
                             if (err)
                             {
-                                return node.error('Failed to fetch value from ADC', err);
+                                return node.error('Unable to connect to ADC and Failed to fetch value from Chipset:'+this.chip+" "+this.channel+" "+this.i2c_address, err);
                             }
                             else
                             {
@@ -141,7 +141,7 @@ module.exports = function(RED)
                         {
                             if (err)
                             {
-                                return node.error('Failed to fetch value from ADC', err);
+                                return node.error('Unable to connect to ADC and Failed to fetch value from Chipset:'+this.chip+" "+this.channel+" "+this.i2c_address, err);
                             }
                             else
                             {
@@ -164,11 +164,14 @@ module.exports = function(RED)
                     }
 
                 });
-                await sleep(10);
+
                 //set adc_busy and is_que_full to false now that we are done with them
                 globalContext.set("adc_is_busy_node_red_contrib_anolog_to_digital_converter_raspberry_pi", false);
                 globalContext.set("node_red_contrib_anolog_to_digital_converter_raspberry_pi_"+this.chip+this.i2c_address+this.channel, false);
+                await sleep(100);
+                if (done) {
                 done();
+                }
 
 
 
