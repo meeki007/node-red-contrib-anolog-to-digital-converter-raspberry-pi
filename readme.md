@@ -24,7 +24,7 @@ node-red-contrib-anolog-to-digital-converter-raspberry-pi
 * [Bugs / Feature request](#bugs--feature-request)
 * [License](#license)
 * [Work](#work)
-* [Contributor of Project](#contributor)
+* [Contributor_of_Project](#Contributor_of_Project)
 
 ---
 
@@ -135,7 +135,7 @@ _Need computers to flip switches?
 Contact me at meeki007@gmail.com
 
 
-## Contributor of Project
+## Contributor_of_Project
 
 Thanks to [Kevin Fitzgerald AKA kfitzgerald](https://github.com/kfitzgerald/raspi-kit-ads1x15#readme) for his work on raspi-kit-ads1x15. It made making this node for node-red possible.
 <br>
