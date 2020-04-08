@@ -42,10 +42,10 @@
         </select>
     </div>
 
-    <div class="form-row" id="samplesPerSecond0">
-        <label for="input-samplesPerSecond0"><i class="fa fa-cog"></i> Samples/sec</label>
-        <select id="input-samplesPerSecond0">
-           <option value="SPS_128">128</option>
+    <div class="form-row node-type-IC_ADS1015_selections">
+        <label><i class="fa fa-cog"></i> Samples/sec</label>
+        <select id="node-input-samplesPerSecond0">
+            <option value="SPS_128">128</option>
             <option value="SPS_250">250</option>
             <option value="SPS_490">490</option>
             <option value="SPS_920">920</option>
@@ -54,9 +54,9 @@
             <option value="SPS_3300">3300</option>
         </select>
     </div>
-    <div class="form-row" id="samplesPerSecond1">
-        <label for="input-samplesPerSecond1"><i class="fa fa-cog"></i> Samples/sec</label>
-        <select id="input-samplesPerSecond1">
+    <div class="form-row node-type-IC_ADS1115_selections">
+        <label><i class="fa fa-cog"></i> Samples/sec</label>
+        <select id="node-input-samplesPerSecond1">
             <option value="SPS_8">8</option>
             <option value="SPS_16">16</option>
             <option value="SPS_32">32</option>
@@ -116,11 +116,12 @@
         defaults: {
             property: {value:"payload",required:true},
             name: {value:""},
-            chip: { value: "IC_ADS1115" },
+            chip: {value:"IC_ADS1115"},
             i2c_address: {value:"ADDRESS_0x48"},
             channel: {value:"CHANNEL_0"},
-            samplesPerSecond: { value: "SPS_250" },
-            progGainAmp: { value: "PGA_4_096V" },
+            samplesPerSecond0: {value:"SPS_920"},
+            samplesPerSecond1: {value:"SPS_128"},
+            progGainAmp: {value:"PGA_4_096V"},
         },
         color:"#FFCC66",
         inputs: 1,
@@ -140,37 +141,32 @@
             }
             $("#node-input-property").typedInput({default:'msg',types:['msg']});
 
-            var chip = $("#node-input-chip").val();
-            chip == "IC_ADS1015" ? (
-                $("#input-samplesPerSecond0").val(this.samplesPerSecond)
-            ) : (
-                    $("#input-samplesPerSecond1").val(this.samplesPerSecond)
-                );
-            $("#node-input-chip").change(function () {
-                var chip = $("#node-input-chip").val();
-                chip == "IC_ADS1115" ? (
-                    $("#samplesPerSecond0").hide(),
-                    $("#samplesPerSecond1").show(),
-                    $("#input-samplesPerSecond1").val('SPS_128')
-                ) : (
-                        $("#samplesPerSecond1").hide(),
-                        $("#samplesPerSecond0").show(),
-                        $("#input-samplesPerSecond0").val('SPS_920')
-                    );
+            $("#node-input-chip").change(function()
+            {
+              if ($(this).val() == "IC_ADS1115")
+              {
+                $(".node-type-IC_ADS1015_selections").hide();
+                $(".node-type-IC_ADS1115_selections").show();
+              }
+              else
+              {
+                $(".node-type-IC_ADS1115_selections").hide();
+                $(".node-type-IC_ADS1015_selections").show();
+              }
             });
 
+
+
+
+            this.samplesPerSecond1 = !this.samplesPerSecond1 ? "SPS_128" : this.samplesPerSecond1
+            this.samplesPerSecond0 = !this.samplesPerSecond0 ? "SPS_920" : this.samplesPerSecond0
             this.i2c_address = !this.i2c_address ? "ADDRESS_0x48" : this.i2c_address;
             this.channel = !this.channel ? "CHANNEL_0" : this.channel;
             this.progGainAmp = !this.progGainAmp ? "PGA_4_096V" : this.progGainAmp;
 
         },
         oneditsave: function () {
-            var chip = $("#node-input-chip").val();
-            chip == "IC_ADS1015" ? (
-                $("#node-input-samplesPerSecond").val($("#input-samplesPerSecond0").val())
-            ) : (
-                    $("#node-input-samplesPerSecond").val($("#input-samplesPerSecond1").val())
-                );
+
         }
 
 
