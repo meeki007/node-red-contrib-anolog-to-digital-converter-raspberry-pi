@@ -22,7 +22,8 @@ module.exports = function(RED)
         this.chip = config.chip || "IC_ADS1115";
         this.i2c_address = config.i2c_address || "ADDRESS_0x48";
         this.channel = config.channel || "CHANNEL_0";
-        this.samplesPerSecond = config.samplesPerSecond || "SPS_250";
+        this.samplesPerSecond1 = config.samplesPerSecond1 || "SPS_128";
+        this.samplesPerSecond0 = config.samplesPerSecond0 || "SPS_920";
         this.progGainAmp = config.progGainAmp || "PGA_4_096V";
 
 
@@ -43,10 +44,21 @@ module.exports = function(RED)
 
         this.on("input", async function(msg, send, done)
         {
-          // If this is pre-1.0, 'send' will be undefined, so fallback to node.send
-          send = send || function() { node.send.apply(node,arguments) }
+            // If this is pre-1.0, 'send' will be undefined, so fallback to node.send
+            send = send || function() { node.send.apply(node,arguments); };
             //clear status icon every new trigger input
             node.status({});
+
+            //define samplesPerSecond to a var based on user selection that is based on chipset
+            var samples_per_second = "SPS_250"; //value that works for both chips .....
+            if ( this.chip == "IC_ADS1115" )
+            {
+                samples_per_second = this.samplesPerSecond1;
+            }
+            else if ( this.chip == "IC_ADS1015" )
+            {
+                samples_per_second = this.samplesPerSecond0;
+            }
 
 
             //Check to see if a job is already waiting in que / drop msg and next job and warn user about trigger rate
@@ -101,7 +113,7 @@ module.exports = function(RED)
 
                         // Defaults for future readings
                         pga: ADS1x15.pga[this.progGainAmp],            // power-gain-amplifier range
-                        sps: ADS1x15.spsADS1115[this.samplesPerSecond]         // data rate (samples per second)
+                        sps: ADS1x15.spsADS1115[samples_per_second]         // data rate (samples per second)
                     });
 
 
