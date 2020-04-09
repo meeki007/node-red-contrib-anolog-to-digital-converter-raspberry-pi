@@ -65,15 +65,17 @@ module.exports = function(RED)
             var is_que_full = globalContext.get("node_red_contrib_anolog_to_digital_converter_raspberry_pi_"+this.chip+this.i2c_address+this.channel);
             if (is_que_full === true)
             {
+                await sleep(100);
                 return node.error('Dropped Request to fetch value from ADC, Chip:'+this.chip+' '+this.i2c_address+' '+this.channel+' , Please increse the ammount of time/rate of trigger when requesting this voltage');
+
             }
             else
             {
                 //set the is_que_full to true untill the work is done
                 globalContext.set("node_red_contrib_anolog_to_digital_converter_raspberry_pi_"+this.chip+this.i2c_address+this.channel, true);
 
-                //sleep 100ms to drop any extra requests made on this chip,i2c_address, and channel
-                await sleep(100);
+                //sleep to drop any extra requests made on this chip,i2c_address, and channel
+                await sleep(1);
 
                 //check to see if ads is busy with another job from another node/tree and wait for job to finish before sending this nodes work
                 var adc_busy = globalContext.get("adc_is_busy_node_red_contrib_anolog_to_digital_converter_raspberry_pi");
@@ -84,8 +86,8 @@ module.exports = function(RED)
                     while(adc_busy === true)
                     {
                         //Math.floor(Math.random() * (max - min + 1) + min);
-                        var random_number_between_100_200 = Math.floor(Math.random() * (300 - 100 + 1) + 100);
-                        await sleep(random_number_between_100_300);
+                        var random_number_between_100_500 = Math.floor(Math.random() * (300 - 100 + 1) + 100);
+                        await sleep(random_number_between_100_500);
                         adc_busy = globalContext.get("adc_is_busy_node_red_contrib_anolog_to_digital_converter_raspberry_pi");
                     }
                 }
@@ -93,8 +95,8 @@ module.exports = function(RED)
                 //now that we have our spot in line set to true so no one else can cut in
                 globalContext.set("adc_is_busy_node_red_contrib_anolog_to_digital_converter_raspberry_pi", true);
 
-                //sleep 100ms to drop any extra requests made to the ads
-                await sleep(100);
+                //sleep to drop any extra requests made to the ads
+                await sleep(1);
 
 
                 // Init Raspi
@@ -139,8 +141,16 @@ module.exports = function(RED)
                                 // clear/end status msg after 3 seconds
                                 var timmerClear = setTimeout(status_clear, 5000);
 
+  //<option value="CHANNEL_0">A0-GND</option>
+
+                                //put all msgs into a object
+                                var voltage_output_object =
+                                {
+                                    [[this.chip.slice(this.chip.length - 7)] + " • " + ["I2C_" + [this.i2c_address]]  + " • " + "Channel " + ["A" + [this.channel.slice(this.channel.length - 1)] + "-GND"] + " • " + "Voltage"]:volts
+                                };
+
                                 //send to volts to payload
-                                RED.util.setMessageProperty(msg,node.property,volts);
+                                RED.util.setMessageProperty(msg,node.property,voltage_output_object);
                                 send(msg);
                             }
                         });
@@ -168,8 +178,16 @@ module.exports = function(RED)
                                 // clear/end status msg after 3 seconds
                                 var timmerClear = setTimeout(status_clear, 5000);
 
+                                //<option value="DIFF_0_1">A0-A1</option>
+
+                                //put all msgs into a object
+                                var voltage_output_object =
+                                {
+                                    [[this.chip.slice(this.chip.length - 7)] + " • " + ["I2C_" + [this.i2c_address]] + " • " + "Channel " + ["A" + [this.channel.slice(5, - 2)]] + "-A" + [this.channel.slice(this.channel.length - 1)] + " • " + "Voltage"]:volts
+                                };
+
                                 //send to volts to payload
-                                RED.util.setMessageProperty(msg,node.property,volts);
+                                RED.util.setMessageProperty(msg,node.property,voltage_output_object);
                                 send(msg);
                             }
                         });
@@ -180,7 +198,7 @@ module.exports = function(RED)
                 //set adc_busy and is_que_full to false now that we are done with them
                 globalContext.set("adc_is_busy_node_red_contrib_anolog_to_digital_converter_raspberry_pi", false);
                 globalContext.set("node_red_contrib_anolog_to_digital_converter_raspberry_pi_"+this.chip+this.i2c_address+this.channel, false);
-                await sleep(100);
+                await sleep(1);
                 if (done) {
                 done();
                 }

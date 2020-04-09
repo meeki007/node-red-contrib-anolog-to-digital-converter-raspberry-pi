@@ -96,6 +96,10 @@ Examples showing how to use the voltage_undivider.
 ```
 [{"id":"9fa062dc.6e1b6","type":"inject","z":"a074224d.a6b91","name":"","topic":"","payload":"","payloadType":"date","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":140,"y":240,"wires":[["2bfc185d.72ddd8"]]},{"id":"2bfc185d.72ddd8","type":"ads1x15-raspi","z":"a074224d.a6b91","property":"x48_A0-GND","name":"x48_A0-GND","chip":"IC_ADS1115","i2c_address":"ADDRESS_0x48","channel":"CHANNEL_0","samplesPerSecond":"SPS_250","progGainAmp":"PGA_4_096V","x":350,"y":140,"wires":[["e219cd74.4ea59"]]},{"id":"edb67462.6fbb88","type":"debug","z":"a074224d.a6b91","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","x":550,"y":220,"wires":[]},{"id":"e219cd74.4ea59","type":"ads1x15-raspi","z":"a074224d.a6b91","property":"x48_A1-GND","name":"x48_A1-GND","chip":"IC_ADS1115","i2c_address":"ADDRESS_0x48","channel":"CHANNEL_1","samplesPerSecond":"SPS_250","progGainAmp":"PGA_4_096V","x":350,"y":200,"wires":[["bc5b5300.34dc1"]]},{"id":"bc5b5300.34dc1","type":"ads1x15-raspi","z":"a074224d.a6b91","property":"x48_A2-GND","name":"x48_A2-GND","chip":"IC_ADS1115","i2c_address":"ADDRESS_0x48","channel":"CHANNEL_2","samplesPerSecond":"SPS_250","progGainAmp":"PGA_4_096V","x":350,"y":260,"wires":[["6a55c7a6.54e078"]]},{"id":"6a55c7a6.54e078","type":"ads1x15-raspi","z":"a074224d.a6b91","property":"x48_A3-GND","name":"x48_A3-GND","chip":"IC_ADS1115","i2c_address":"ADDRESS_0x48","channel":"CHANNEL_3","samplesPerSecond":"SPS_250","progGainAmp":"PGA_4_096V","x":350,"y":320,"wires":[["edb67462.6fbb88"]]}]
 ```
+<br>
+Please import this flow as an example of how to use.
+
+NOTE: Make sure you name your msg.payload for each node or it will be deleted by the next. Again please import the example above.  
 
 <br>
 
@@ -176,3 +180,15 @@ Added more verbose statment for faild connection to ADC. To tell user on what ch
 <br>
 Fixed chip selction being stuck and unable to select ads1015. No longer stuck on ADS1115 mode.
 <br>
+version 0.4.21
+<br>
+Fixed Samples Per second issue. Users unable to set and keep value wanted.
+<br>
+Fixed a timeout issue that crashed node-red proper. THIS WAS BAD. But a rare case if a user had 4 ADC's connected and polled them at a rate of less than 100ms. Thankyou odd balls. never thought people would go pushing the limits of this node. 
+<br>
+
+
+
+
+
+
