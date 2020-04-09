@@ -180,6 +180,8 @@ Added more verbose statment for faild connection to ADC. To tell user on what ch
 <br>
 Fixed chip selction being stuck and unable to select ads1015. No longer stuck on ADS1115 mode.
 <br>
+<br>
+<br>
 version 0.4.21
 <br>
 Fixed Samples Per second issue. Users unable to set and keep value wanted.
