@@ -1,6 +1,6 @@
 {
     "name": "node-red-contrib-anolog-to-digital-converter-raspberry-pi",
-    "version": "0.4.21",
+    "version": "0.4.24",
     "description": "A node-red node providing access to a ADS1x15 I2C analog to digital converter using a raspberry pi",
     "dependencies": {
       "raspi-kit-ads1x15": ">=1.0.0",
@@ -9,9 +9,6 @@
     },
     "directories": {
       "doc": "doc"
-    },
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
     },
     "node-red": {
       "nodes": {

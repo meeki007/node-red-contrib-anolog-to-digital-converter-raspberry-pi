@@ -182,15 +182,16 @@ Fixed chip selction being stuck and unable to select ads1015. No longer stuck on
 <br>
 <br>
 <br>
-version 0.4.21
+version 0.4.23
 <br>
 Fixed Samples Per second issue. Users unable to set and keep value wanted.
 <br>
-Fixed a timeout issue that crashed node-red proper. THIS WAS BAD. But a rare case if a user had 4 ADC's connected and polled them at a rate of less than 100ms. Thankyou odd balls. never thought people would go pushing the limits of this node. 
+Fixed a timeout issue that crashed node-red proper. THIS WAS BAD. But a rare case if a user had 4 ADC's connected and polled them at a rate of less than 100ms. Thankyou odd balls. never thought people would go pushing the limits of this node.
 <br>
-
-
-
-
-
-
+<br>
+<br>
+<br>
+version 0.4.24
+<br>
+Docker fix patch
+<br>
