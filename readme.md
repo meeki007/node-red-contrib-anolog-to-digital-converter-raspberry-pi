@@ -190,8 +190,14 @@ Fixed a timeout issue that crashed node-red proper. THIS WAS BAD. But a rare cas
 <br>
 <br>
 <br>
-<br>
 version 0.4.24
 <br>
 Docker fix patch
+<br>
+<br>
+<br>
+<br>
+version 0.4.25
+<br>
+Changed msg object to a better format
 <br>
