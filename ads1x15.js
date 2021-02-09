@@ -75,7 +75,7 @@ module.exports = function(RED)
                 globalContext.set("node_red_contrib_anolog_to_digital_converter_raspberry_pi_"+this.chip+this.i2c_address+this.channel, true);
 
                 //sleep to drop any extra requests made on this chip,i2c_address, and channel
-                await sleep(1);
+                await sleep(5);
 
                 //check to see if ads is busy with another job from another node/tree and wait for job to finish before sending this nodes work
                 var adc_busy = globalContext.get("adc_is_busy_node_red_contrib_anolog_to_digital_converter_raspberry_pi");
@@ -96,7 +96,7 @@ module.exports = function(RED)
                 globalContext.set("adc_is_busy_node_red_contrib_anolog_to_digital_converter_raspberry_pi", true);
 
                 //sleep to drop any extra requests made to the ads
-                await sleep(1);
+                await sleep(5);
 
 
                 // Init Raspi
@@ -141,12 +141,17 @@ module.exports = function(RED)
                                 // clear/end status msg after 3 seconds
                                 var timmerClear = setTimeout(status_clear, 5000);
 
-  //<option value="CHANNEL_0">A0-GND</option>
+                                let chip_value = [this.chip.slice(this.chip.length - 7)];
+                                let address_value = [this.i2c_address];
+                                let channel_value = ["A" + [this.channel.slice(this.channel.length - 1)] + "-GND"];
 
                                 //put all msgs into a object
                                 var voltage_output_object =
                                 {
-                                    [[this.chip.slice(this.chip.length - 7)] + " • " + ["I2C_" + [this.i2c_address]]  + " • " + "Channel " + ["A" + [this.channel.slice(this.channel.length - 1)] + "-GND"] + " • " + "Voltage"]:volts
+                                voltage : volts,
+                                channel : channel_value,
+                                I2C : address_value,
+                                chip : chip_value
                                 };
 
                                 //send to volts to payload
@@ -178,12 +183,17 @@ module.exports = function(RED)
                                 // clear/end status msg after 3 seconds
                                 var timmerClear = setTimeout(status_clear, 5000);
 
-                                //<option value="DIFF_0_1">A0-A1</option>
+                                let chip_value = [this.chip.slice(this.chip.length - 7)];
+                                let address_value = [this.i2c_address];
+                                let channel_value = ["A" + [this.channel.slice(5, - 2)]] + "-A" + [this.channel.slice(this.channel.length - 1)];
 
                                 //put all msgs into a object
                                 var voltage_output_object =
                                 {
-                                    [[this.chip.slice(this.chip.length - 7)] + " • " + ["I2C_" + [this.i2c_address]] + " • " + "Channel " + ["A" + [this.channel.slice(5, - 2)]] + "-A" + [this.channel.slice(this.channel.length - 1)] + " • " + "Voltage"]:volts
+                                voltage : volts,
+                                channel : channel_value,
+                                I2C : address_value,
+                                chip : chip_value
                                 };
 
                                 //send to volts to payload
@@ -198,7 +208,7 @@ module.exports = function(RED)
                 //set adc_busy and is_que_full to false now that we are done with them
                 globalContext.set("adc_is_busy_node_red_contrib_anolog_to_digital_converter_raspberry_pi", false);
                 globalContext.set("node_red_contrib_anolog_to_digital_converter_raspberry_pi_"+this.chip+this.i2c_address+this.channel, false);
-                await sleep(1);
+                await sleep(5);
                 if (done) {
                 done();
                 }
